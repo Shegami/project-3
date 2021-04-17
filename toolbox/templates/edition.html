@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %} create {% endblock %}
+
+{% block body %}
+    {% if form.get_form_name == 'NewClientForm' %}
+        <p>EDIT CLIENT!</p>
+        <form method="post" action="{% url 'edit_client' model_id %}">
+    {% elif form.get_form_name == 'NewProjectForm' %}
+        <p>EDIT PROJECT!</p>
+        <form method="post" action="{% url 'edit_project' model_id %}">
+    {% elif form.get_form_name == 'NewInvoiceForm' %}
+        <p>EDIT INVOICE!</p>
+        <form method="post" action="{% url 'edit_invoice' model_id %}">
+    {% elif form.get_form_name == 'NewActForm' %}
+        <p>EDIT ACT!</p>
+        <form method="post" action="{% url 'edit_act' model_id %}">
+    {% endif %}
+        {{ form.as_p }}
+        <button type="reset">Reset</button>
+        <button name="button" value="submit" type="submit">Save</button>
+    </form>
+<br>
+    <a href="{% url 'main' %}">
+        <button>Back to main</button>
+</a>
+{% endblock %}

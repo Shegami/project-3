@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %} Acts {% endblock %}
+
+{% block body %}
+<p align="center">
+    <a href="{% url 'main' %}">
+        <button>Back to main</button>
+    </a>
+<form method="post" action="{% url 'mr_redirect' %}">
+    <p align="center">
+        <button name="button" value="create_act">Create New Act</button>
+</form>
+
+<table align="center" style="width:60%" border="0">
+    <caption>ALL ACTS!</caption>
+    <tr>
+        <td align="center" bgcolor="#c0c0c0">NUMBER</td>
+        <td align="center" bgcolor="#c0c0c0">INVOICE</td>
+        <td align="center" bgcolor="#c0c0c0">CLIENT</td>
+        <td align="center" bgcolor="#c0c0c0">PROJECT</td>
+        <td align="center" bgcolor="#c0c0c0">AMOUNT</td>
+        <td align="center" bgcolor="#c0c0c0">CURRENCY</td>
+        <td align="center" bgcolor="#c0c0c0">DATE</td>
+        <td align="center" bgcolor="#c0c0c0">CONFIGURATION</td>
+    </tr>
+      {% for model in models %}
+    <tr>
+        <td align="center">{{ model.number }}</td>
+        <td align="center">{{ model.invoice }}</td>
+        <td align="center">{{ model.client }}</td>
+        <td align="center">{{ model.project }}</td>
+        <td align="center">{{ model.amount }}</td>
+        <td align="center">{{ model.currency }}</td>
+        <td align="center">{{ model.create_date }}</td>
+        <td align="center">
+            <form method="post" action="{% url 'mr_editor' model.id model.get_model_name 'get_acts' %}">
+                    <button name="button" value="edit">Edit</button>
+                    <button name="button" value="delete">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

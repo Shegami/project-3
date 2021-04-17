@@ -15,7 +15,23 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from toolbox.views import main, mr_redirect, mr_editor, \
+    create_act, create_invoice, create_project, create_client, get_model, \
+    edit_invoice, edit_client, edit_act, edit_project, delete_model
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', main, name='main'),
+    path('mr_redirect/', mr_redirect, name='mr_redirect'),
+    path('mr_editor/<int:model_id>/<str:model_name>/<str:link>', mr_editor, name='mr_editor'),
+    path('create_client/', create_client, name='create_client'),
+    path('create_project/', create_project, name='create_project'),
+    path('create_invoice/', create_invoice, name='create_invoice'),
+    path('create_act/', create_act, name='create_act'),
+    path('get_model/<str:button>', get_model, name='get_model'),
+    path('edit_act/<int:model_id>', edit_act, name='edit_act'),
+    path('edit_invoice/<int:model_id>', edit_invoice, name='edit_invoice'),
+    path('edit_project/<int:model_id>', edit_project, name='edit_project'),
+    path('edit_client/<int:model_id>', edit_client, name='edit_client'),
+    path('delete_model/<str:model_name>/<int:model_id>/<str:link>', delete_model, name='delete_model'),
 ]

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %} Clients {% endblock %}
+
+{% block body %}
+<p align="center">
+    <a href="{% url 'main' %}">
+        <button>Back to main</button>
+    </a>
+<form method="post" action="{% url 'mr_redirect' %}">
+    <p align="center">
+        <button name="button" value="create_client">Create New Client</button>
+</form>
+
+<table align="center" style="width:40%" border="0">
+    <caption>ALL CLIENTS!</caption>
+    <tr>
+        <td align="center" bgcolor="#c0c0c0">ID</td>
+        <td align="center" bgcolor="#c0c0c0">CLIENT</td>
+        <td align="center" bgcolor="#c0c0c0">CONFIGURATION</td>
+
+    </tr>
+      {% for model in models %}
+    <tr>
+        <td align="center">{{ model.id }}</td>
+        <td align="center">{{ model.name }}</td>
+        <td align="center">
+            <form method="post" action="{% url 'mr_editor' model.id model.get_model_name 'get_clients' %}">
+                    <button name="button" value="edit">Edit</button>
+                    <button name="button" value="delete">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
