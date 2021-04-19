@@ -18,6 +18,8 @@ from django.urls import path
 from toolbox.views import main, mr_redirect, mr_editor, \
     create_act, create_invoice, create_project, create_client, get_model, \
     edit_invoice, edit_client, edit_act, edit_project, delete_model
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -34,4 +36,5 @@ urlpatterns = [
     path('edit_project/<int:model_id>', edit_project, name='edit_project'),
     path('edit_client/<int:model_id>', edit_client, name='edit_client'),
     path('delete_model/<str:model_name>/<int:model_id>/<str:link>', delete_model, name='delete_model'),
-]
+] + static(settings.MEDIA_URL,
+           document_root=settings.MEDIA_ROOT)

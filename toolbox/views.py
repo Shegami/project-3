@@ -8,7 +8,7 @@ def main(request):
         return render(request, 'main.html')
 
 
-def mr_redirect(request, model_id=None, model_name=None):
+def mr_redirect(request):
     button = request.POST['button']
     if button == 'create_client':
         return redirect('create_client')
