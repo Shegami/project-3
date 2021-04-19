@@ -38,19 +38,19 @@ def get_model(request, button):
 
 
 def create_client(request):
-    return create_form(request, NewClientForm(), 'creation.html')
+    return create_form(request, NewClientForm, 'creation.html')
 
 
 def create_project(request):
-    return create_form(request, NewProjectForm(), 'creation.html')
+    return create_form(request, NewProjectForm, 'creation.html')
 
 
 def create_invoice(request):
-    return create_form(request, NewInvoiceForm(), 'creation.html')
+    return create_form(request, NewInvoiceForm, 'creation.html')
 
 
 def create_act(request):
-    return create_form(request, NewActForm(), 'creation.html')
+    return create_form(request, NewActForm, 'creation.html')
 
 
 def create_form(request, form, link):
@@ -62,19 +62,21 @@ def create_form(request, form, link):
     else:
         form = form(request.POST)
         if form.is_valid():
-            if form == NewInvoiceForm():
+            if form.get_form_name() == 'NewInvoiceForm':
                 pre_form = form.save(commit=False)
                 pre_form.client = pre_form.project.client
                 pre_form.save()
-            elif form == NewActForm():
+                return redirect('main')
+            elif form.get_form_name() == 'NewActForm':
                 pre_form = form.save(commit=False)
                 pre_form.client = pre_form.invoice.client
                 pre_form.project = pre_form.invoice.project
                 pre_form.amount = pre_form.invoice.amount
                 pre_form.currency = pre_form.invoice.currency
                 pre_form.save()
+                return redirect('main')
             form.save()
-            return redirect(link)
+            return redirect('main')
         errors = form.errors
         return HttpResponse(f'error in {errors}')
 
@@ -95,19 +97,19 @@ def mr_editor(request, model_id, model_name, link):
 
 
 def edit_client(request, model_id):
-    return edit_model(request, NewClientForm(), 'edition.html', Client, model_id)
+    return edit_model(request, NewClientForm, 'edition.html', Client, model_id)
 
 
 def edit_act(request, model_id):
-    return edit_model(request, NewActForm(), 'edition.html', Act, model_id)
+    return edit_model(request, NewActForm, 'edition.html', Act, model_id)
 
 
 def edit_invoice(request, model_id):
-    return edit_model(request, NewInvoiceForm(), 'edition.html', Invoice, model_id)
+    return edit_model(request, NewInvoiceForm, 'edition.html', Invoice, model_id)
 
 
 def edit_project(request, model_id):
-    return edit_model(request, NewProjectForm(), 'edition.html', Project, model_id)
+    return edit_model(request, NewProjectForm, 'edition.html', Project, model_id)
 
 
 def edit_model(request, form, link, model_type, model_id):
