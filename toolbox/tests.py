@@ -1,15 +1,41 @@
-from django.test import TestCase
+from django import test
 from toolbox.models import Invoice, Client, Project, Act
 from datetime import date
 
+c = test.Client()
 
-class HomeTest(TestCase):
+
+class HomeTest(test.TestCase):
     def test_home(self):
         result = self.client.get('/')
-        TestCase.assertEqual(self, result.status_code, 200)
+        test.TestCase.assertEqual(self, result.status_code, 200)
 
 
-class CreateClientTest(TestCase):
+class RedirectToCreateClientTest(test.TestCase):
+    def test_mr_redirect(self):
+        response = c.post('/mr_redirect/', {'button': 'create_client'}, follow=True)
+        self.assertEqual(response.status_code, 200)
+
+
+class RedirectToCreateProject(test.TestCase):
+    def test_mr_redirect(self):
+        response = c.post('/mr_redirect/', {'button': 'create_project'}, follow=True)
+        self.assertEqual(response.status_code, 200)
+
+
+class RedirectToCreateInvoice(test.TestCase):
+    def test_mr_redirect(self):
+        response = c.post('/mr_redirect/', {'button': 'create_invoice'}, follow=True)
+        self.assertEqual(response.status_code, 200)
+
+
+class RedirectToCreateAct(test.TestCase):
+    def test_mr_redirect(self):
+        response = c.post('/mr_redirect/', {'button': 'create_act'}, follow=True)
+        self.assertEqual(response.status_code, 200)
+
+
+class CreateClientTest(test.TestCase):
     def setUp(self):
         Client.objects.create(
             name='TEST_CLIENT'
