@@ -23,18 +23,18 @@ def mr_redirect(request):
 
 
 def get_model(request, button):
-    if 'acts' in button:
-        context = {'models': Act.objects.all().order_by('id')}
-        return render(request, 'get_acts.html', context)
+    if 'clients' in button:
+        context = {'models': Client.objects.all().order_by('id')}
+        return render(request, 'get_clients.html', context)
+    elif 'projects' in button:
+        context = {'models': Project.objects.all().order_by('id')}
+        return render(request, 'get_projects.html', context)
     elif 'invoices' in button:
         context = {'models': Invoice.objects.all().order_by('id')}
         return render(request, 'get_invoices.html', context)
-    elif 'clients' in button:
-        context = {'models': Client.objects.all().order_by('id')}
-        return render(request, 'get_clients.html', context)
     else:
-        context = {'models': Project.objects.all().order_by('id')}
-        return render(request, 'get_projects.html', context)
+        context = {'models': Act.objects.all().order_by('id')}
+        return render(request, 'get_acts.html', context)
 
 
 def create_client(request):
@@ -88,10 +88,10 @@ def mr_editor(request, model_id, model_name, link):
             return redirect('edit_client', model_id)
         elif model_name == 'Project':
             return redirect('edit_project', model_id)
-        elif model_name == 'Act':
-            return redirect('edit_act', model_id)
         elif model_name == 'Invoice':
             return redirect('edit_invoice', model_id)
+        elif model_name == 'Act':
+            return redirect('edit_act', model_id)
     elif button == 'delete':
         return redirect('delete_model', model_name, model_id, link)
 
